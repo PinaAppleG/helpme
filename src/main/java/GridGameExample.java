@@ -89,6 +89,8 @@ public class GridGameExample {
 
         //SoccerGame soccer = new SoccerGame();
         SoccerGame gridGame = new SoccerGame();
+
+        //GridGame gridGame = new GridGame();
         final OOSGDomain domain = gridGame.generateDomain();
 
         final HashableStateFactory hashingFactory = new SimpleHashableStateFactory();
@@ -113,11 +115,14 @@ public class GridGameExample {
 
         w.join(a0);
         w.join(a1);
-
+        System.out.println(s.variableKeys());
         GameEpisode ga = null;
         List<GameEpisode> games = new ArrayList<GameEpisode>();
+
         for(int i = 0; i < 10; i++){
+            System.out.println("Check1");
             ga = w.runGame();
+            System.out.println("Check2");
             games.add(ga);
         }
 

@@ -1,23 +1,23 @@
 import burlap.domain.stochasticgames.gridgame.state.GGAgent;
+import burlap.mdp.core.oo.state.ObjectInstance;
+import burlap.mdp.core.state.MutableState;
+import burlap.mdp.core.state.State;
+import burlap.mdp.core.state.StateUtilities;
 import burlap.mdp.core.state.UnknownKeyException;
 
 import java.util.Arrays;
 import java.util.List;
 
-//import static burlap.domain.stochasticgames.gridgame.GridGame.*;
-
-import static burlap.domain.stochasticgames.gridgame.GridGame.VAR_PN;
-import static burlap.domain.stochasticgames.gridgame.GridGame.VAR_X;
-import static burlap.domain.stochasticgames.gridgame.GridGame.VAR_Y;
+import static burlap.domain.stochasticgames.gridgame.GridGame.*;
 
 /**
  * Created by hwkim on 7/22/16.
  */
 public class SoccerAgent extends GGAgent{
-    public boolean hasBall;
+    public int hasBall;
     private static final List<Object> keys = Arrays.<Object>asList(VAR_X, VAR_Y, VAR_PN, SoccerGame.BALL);
 
-    public SoccerAgent(int x, int y, int player, java.lang.String name, boolean hasBall) {
+    public SoccerAgent(int x, int y, int player, java.lang.String name, int hasBall) {
         super(x, y, player, name);
         this.hasBall = hasBall;
 
@@ -35,11 +35,44 @@ public class SoccerAgent extends GGAgent{
             return player;
         }
         else if(variableKey.equals(SoccerGame.BALL)) {
-            System.out.println(hasBall);
             return hasBall;
         }
         else{
             throw new UnknownKeyException(variableKey);
         }
+    }
+
+    @Override
+    public MutableState set(Object variableKey, Object value) {
+
+        int i = StateUtilities.stringOrNumber(value).intValue();
+
+        if(variableKey.equals(VAR_X)){
+            this.x = i;
+        }
+        else if(variableKey.equals(VAR_Y)){
+            this.y = i;
+        }
+        else if(variableKey.equals(VAR_PN)){
+            this.player = i;
+        }
+        else if(variableKey.equals(SoccerGame.BALL)){
+            this.hasBall = i;
+        }
+        else{
+            throw new UnknownKeyException(variableKey);
+        }
+
+        return this;
+    }
+
+    @Override
+    public ObjectInstance copyWithName(String objectName) {
+        return new SoccerAgent(x, y, player, objectName, hasBall);
+    }
+
+    @Override
+    public State copy() {
+        return new SoccerAgent(x, y, player, name, hasBall);
     }
 }

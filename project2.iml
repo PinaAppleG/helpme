@@ -14,7 +14,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/Project 2/burlap-3.0.0-jar-with-dependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/resources/burlap-3.0.0-jar-with-dependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

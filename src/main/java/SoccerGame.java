@@ -49,16 +49,13 @@ public class SoccerGame extends GridGame{
         return domain;
     }
 
-    /**
-     * Returns the initial state for a classic prisoner's dilemma formulated in a Grid Game.
-     * @return the grid game prisoner's dilemma initial state
-     */
+
     public static State getSoccerInitialState(){
 
         GenericOOState s = new GenericOOState(
                 //GGAgent(int x, int y, int player, java.lang.String name)
-                new SoccerAgent(1, 1, 0, "agent0", true),
-                new SoccerAgent(2, 1, 1, "agent1", false),
+                new SoccerAgent(1, 1, 0, "agent0", 1),
+                new SoccerAgent(2, 1, 1, "agent1", 0),
                 //GGGoal(int x, int y, int type, java.lang.String name)
                 new GGGoal(0, 0, 2, "g0"),
                 new GGGoal(0, 1, 2, "g1"),
@@ -83,7 +80,7 @@ public class SoccerGame extends GridGame{
             int ax = (Integer)agent.get(VAR_X);
             int ay = (Integer)agent.get(VAR_Y);
             int apn = (Integer)agent.get(VAR_PN);
-            boolean hasBall = (Boolean)agent.get(BALL);
+            int hasBall = (Integer) agent.get(BALL);
 
             //find all universal goals
             List<ObjectInstance> goals = s.objectsOfClass(CLASS_GOAL);
@@ -94,7 +91,7 @@ public class SoccerGame extends GridGame{
 
                     int gx = (Integer)goal.get(VAR_X);
                     int gy = (Integer)goal.get(VAR_Y);
-                    if(gx == ax && gy == ay && hasBall){
+                    if(gx == ax && gy == ay && hasBall == 1){
                         return true;
                     }
                 }

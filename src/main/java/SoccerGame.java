@@ -16,6 +16,7 @@ import burlap.mdp.stochasticgames.JointAction;
 import burlap.mdp.stochasticgames.model.JointRewardFunction;
 import burlap.mdp.stochasticgames.oo.OOSGDomain;
 
+import java.util.Random;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +58,17 @@ public class SoccerGame extends GridGame{
 
     public static State getSoccerInitialState(){
 
+        Random rand = new Random();
+        int i = rand.nextInt(1);
+        int j = 0;
+        if(i == 0) {
+            j = 1;
+        }
+
         GenericOOState s = new GenericOOState(
                 //GGAgent(int x, int y, int player, java.lang.String name)
-                new SoccerAgent(1, 1, 0, "agent0", 1),
-                new SoccerAgent(2, 1, 1, "agent1", 0),
+                new SoccerAgent(1, 1, 0, "agent0", i),
+                new SoccerAgent(2, 1, 1, "agent1", j),
                 //GGGoal(int x, int y, int type, java.lang.String name)
                 new GGGoal(0, 0, 2, "g0"),
                 new GGGoal(0, 1, 2, "g1"),

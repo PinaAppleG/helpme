@@ -97,8 +97,8 @@ public class GridGameExample {
 
         final State s = SoccerGame.getSoccerInitialState();
 
-        JointRewardFunction rf = new GridGame.GGJointRewardFunction(domain, -1, 100, false);
-        TerminalFunction tf = new GridGame.GGTerminalFunction(domain);
+        JointRewardFunction rf = new SoccerGame.GGJointRewardFunction(domain, -1, 100, false);
+        TerminalFunction tf = new SoccerGame.GGTerminalFunction(domain);
 
         SGAgentType at = GridGame.getStandardGridGameAgentType(domain);
         MAValueIteration vi = new MAValueIteration(domain, rf, tf, 0.99, hashingFactory, 0., new CorrelatedQ(CorrelatedEquilibriumSolver.CorrelatedEquilibriumObjective.UTILITARIAN), 0.00015, 50);
@@ -115,7 +115,7 @@ public class GridGameExample {
 
         w.join(a0);
         w.join(a1);
-        System.out.println(s.variableKeys());
+        //System.out.println(s.variableKeys());
         GameEpisode ga = null;
         List<GameEpisode> games = new ArrayList<GameEpisode>();
 

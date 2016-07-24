@@ -90,7 +90,7 @@ public class GridGameStandardMechanics implements FullJointModel {
         for(LocationSetProb sp : outcomeSets){
 
             //resolve collisions from attempted swaps, which is deterministic and does not need to be recursed
-            List <Location2> basicMoveResults = this.resolvePositionSwaps(previousLocations, sp.locs);
+            List <Location2> basicMoveResults = this.resolvePositionSwaps(previousLocations, sp.locs, (OOState)s);
 
             //finally, we need to find all stochastic outcomes from cell competition
             List <LocationSetProb> cOutcomeSets = this.getPossibleCollisionOutcomes(previousLocations, basicMoveResults);
@@ -153,7 +153,7 @@ public class GridGameStandardMechanics implements FullJointModel {
 
         //Mechanism 2: Both agents move into each other's position, thus colliding: resolvePositionSwaps
         //Both agents try to move but collied into each other. No one moves.
-        basicMoveResults = this.resolvePositionSwaps(previousLocations, basicMoveResults);
+        basicMoveResults = this.resolvePositionSwaps(previousLocations, basicMoveResults, (OOState)s);
 
         //Mechanism 3: Agents attempt to move into the same position, thus potentially colliding: resolveCollisions
         List <Location2> finalPositions = this.resolveCollisions(previousLocations, basicMoveResults);
@@ -226,10 +226,18 @@ public class GridGameStandardMechanics implements FullJointModel {
      * @param desiredPositions the new position the agents are trying to go into
      * @return the positions of the agents accounting for collisions.
      */
-    protected List<Location2> resolvePositionSwaps(List <Location2> originalPositions, List<Location2> desiredPositions){
+    protected List<Location2> resolvePositionSwaps(List <Location2> originalPositions, List<Location2> desiredPositions, OOState s){
 
         List<Location2> resolvedPositions = new ArrayList<GridGameStandardMechanics.Location2>(desiredPositions);
         List <Location2> newNoopPositions = new ArrayList<GridGameStandardMechanics.Location2>();
+
+        Random rand = new Random();
+        int agentNum = rand.nextInt(1);
+        int y = 0;
+        if(agentNum == 0) {
+            y = 1;
+        }
+
 
         for(int i = 0; i < originalPositions.size(); i++){
             Location2 a1op = originalPositions.get(i);
@@ -238,10 +246,25 @@ public class GridGameStandardMechanics implements FullJointModel {
                 Location2 a2op = originalPositions.get(j);
                 Location2 a2dp = resolvedPositions.get(j);
                 if(a1op.equals(a2dp) && a1dp.equals(a2op)){ //this is a collision between the agents
-                    resolvedPositions.set(i, new Location2(a1op));
-                    resolvedPositions.set(j, new Location2(a2op));
+                    resolvedPositions.set(i, new Location2(a1op));//was a1dp, now a1op
+                    resolvedPositions.set(j, new Location2(a2op));//was a2dp, now a2op
                     newNoopPositions.add(a1op);
                     newNoopPositions.add(a2op);
+
+                    String agentName = this.agentName(agentNum, (OOState)s);
+                    ObjectInstance agent = ((GenericOOState)s).touch(agentName);
+                    int otherAgentNum = 0;
+                    if(agentNum == 0) {
+                        otherAgentNum = 1;
+                    }
+                    String otherAgent = this.agentName(otherAgentNum, (OOState) s);
+                    ObjectInstance agent2 = ((GenericOOState) s).touch(otherAgent);
+
+                    if((Integer) agent.get(SoccerGame.BALL) == 1){
+                        System.out.println("BALL HAS CHANGED POSSESSION!!!!!");
+                        ((MutableState) agent).set(SoccerGame.BALL, 0);
+                        ((MutableState) agent2).set(SoccerGame.BALL, 1);
+                    }
 
                     break;
                 }
@@ -250,7 +273,7 @@ public class GridGameStandardMechanics implements FullJointModel {
         }
 
 
-        if(!newNoopPositions.isEmpty()){
+        if(!newNoopPositions.isEmpty()){ //triggers when newNoopPositions is NOT empty
             return this.backupNoOps(originalPositions, resolvedPositions, newNoopPositions);
         }
 
@@ -495,6 +518,8 @@ public class GridGameStandardMechanics implements FullJointModel {
                 //if agent hasBall, switch ownership of ball? Create a switch ownership ball method?
                 reset = true;
 
+
+                //Changing ball possession
                 String agentName = this.agentName(agentNum, (OOState)s);
                 ObjectInstance agent = ((GenericOOState)s).touch(agentName);
                 int otherAgentNum = 0;
@@ -505,6 +530,7 @@ public class GridGameStandardMechanics implements FullJointModel {
                 ObjectInstance agent2 = ((GenericOOState) s).touch(otherAgent);
 
                 if((Integer) agent.get(SoccerGame.BALL) == 1){
+                    System.out.println("BALL HAS CHANGED POSSESSION!!!!!");
                     ((MutableState) agent).set(SoccerGame.BALL, 0);
                     ((MutableState) agent2).set(SoccerGame.BALL, 1);
                 }

@@ -57,12 +57,17 @@ public class SoccerGame extends GridGame{
 
 
     public static State getSoccerInitialState(){
-
+        //1 = true = hasBall
         Random rand = new Random();
-        int i = rand.nextInt(1);
+        boolean randomBall = false; //set to true if you want to randomize who starts with ball in each game
+        int i = 1;
         int j = 0;
-        if(i == 0) {
-            j = 1;
+        if(randomBall) {
+            i = rand.nextInt(1);
+            j = 0;
+            if (i == 0) {
+                j = 1;
+            }
         }
 
         GenericOOState s = new GenericOOState(
@@ -221,9 +226,7 @@ public class SoccerGame extends GridGame{
         }
 
         public double[] reward(State s, JointAction ja, State sp) {
-
             OOState osp = (OOState)sp;
-
             double [] rewards = new double[ja.size()];
 
             //get all agents and initialize reward to default
@@ -232,7 +235,6 @@ public class SoccerGame extends GridGame{
                 int aid = ((GGAgent)o).player;
                 rewards[aid] = this.defaultCost(aid, ja);
             }
-
 
             //check for any agents that reached a universal goal location and give them a goal reward if they did
             //List<GroundedProp> upgps = sp.getAllGroundedPropsFor(agentInUniversalGoal);
@@ -245,7 +247,6 @@ public class SoccerGame extends GridGame{
                 }
             }
 
-
             //check for any agents that reached a personal goal location and give them a goal reward if they did
             //List<GroundedProp> ipgps = sp.getAllGroundedPropsFor(agentInPersonalGoal);
             List<GroundedProp> ipgps = agentInPersonalGoal.allGroundings((OOState)sp);
@@ -254,18 +255,24 @@ public class SoccerGame extends GridGame{
                 if(gp.isTrue(osp)){
                     int aid = ((GGAgent)((OOState) sp).object(agentName)).player;
                     rewards[aid] = this.getPersonalGoalReward(osp, agentName);
+
+                    if(aid==0) {
+                        rewards[1] = -1 * this.getPersonalGoalReward(osp, "agent1");
+                    }
+                    else{
+                        rewards[0] = -1 * this.getPersonalGoalReward(osp, "agent0");
+                    }
+
                 }
             }
 
-
             return rewards;
-
         }
 
 
         /**
-         * Returns a default cost for an agent assuming the agent didn't transition to a goal state. If noops incur step cost, then this is always the step cost.
-         * If noops do not incur step costs and the agent took a noop, then 0 is returned.
+         * Returns a default cost for an agent assuming the agent didn't transition to a goal state. If noops incur step cost,
+         * then this is always the step cost. If noops do not incur step costs and the agent took a noop, then 0 is returned.
          * @param aid the agent of interest
          * @param ja the joint action set
          * @return the default reward; either step cost or 0.
@@ -282,8 +289,8 @@ public class SoccerGame extends GridGame{
 
 
         /**
-         * Returns the personal goal rewards. If a single common personal goal reward was set then that is returned. If different personal goal rewards were defined for each
-         * player number, then that is queried and returned instead.
+         * Returns the personal goal rewards. If a single common personal goal reward was set then that is returned.
+         * If different personal goal rewards were defined for each player number, then that is queried and returned instead.
          * @param s the state in which the agent player numbers are defined
          * @param agentName the agent name for which the person goal reward is to be returned
          * @return the personal goal reward for the specified agent.
@@ -293,6 +300,7 @@ public class SoccerGame extends GridGame{
                 return this.pGoalReward;
             }
 
+            //Only if individual personal rewards are used. So, no.
             int pn = (Integer)s.object(agentName).get(GridGame.VAR_PN);
             return this.personalGoalRewards.get(pn);
 

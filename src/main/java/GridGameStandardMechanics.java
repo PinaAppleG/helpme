@@ -231,12 +231,10 @@ public class GridGameStandardMechanics implements FullJointModel {
         List<Location2> resolvedPositions = new ArrayList<GridGameStandardMechanics.Location2>(desiredPositions);
         List <Location2> newNoopPositions = new ArrayList<GridGameStandardMechanics.Location2>();
 
+        //Randomly select who moves first in Type 2 Collision
+        //This follows our statement that
         Random rand = new Random();
         int agentNum = rand.nextInt(1);
-        int y = 0;
-        if(agentNum == 0) {
-            y = 1;
-        }
 
 
         for(int i = 0; i < originalPositions.size(); i++){
@@ -263,6 +261,15 @@ public class GridGameStandardMechanics implements FullJointModel {
                     if((Integer) agent.get(SoccerGame.BALL) == 1){
                         ((MutableState) agent).set(SoccerGame.BALL, 0);
                         ((MutableState) agent2).set(SoccerGame.BALL, 1);
+                        System.out.print("Type2 p1: ");
+                        System.out.print(a1op.x);
+                        System.out.println(a1op.y);
+                        System.out.print("Type2 anl: ");
+                        System.out.print(a2op.x);
+                        System.out.println(a2op.y);
+                        System.out.print("Type 2 COLLISION: Agent ");
+                        System.out.print(agentNum);
+                        System.out.println(" Loses Ball");
                     }
 
                     break;
@@ -509,28 +516,44 @@ public class GridGameStandardMechanics implements FullJointModel {
      */
     protected Location2 sampleBasicMovement(OOState s, Location2 p0, Location2 delta, List <Location2> agentNoOpLocs, int agentNum){
 
+        int otherAgentNum = 0;
+        if(agentNum == 0) {
+            otherAgentNum = 1;
+        }
 
         Location2 p1 = p0.add(delta); //p1 is the location they want to go based on current p0 + delta + move/action
         boolean reset = false;
+
+
         for(Location2 anl : agentNoOpLocs){
+            if(agentNoOpLocs.size() == 2) {
+                break;
+            }
             if(p1.equals(anl)){ //if the desired position is the same as any of the locations where agent NOOP exists
-                //if agent hasBall, switch ownership of ball? Create a switch ownership ball method?
                 reset = true;
 
 
                 //Changing ball possession
                 String agentName = this.agentName(agentNum, (OOState)s);
                 ObjectInstance agent = ((GenericOOState)s).touch(agentName);
-                int otherAgentNum = 0;
-                if(agentNum == 0) {
-                    otherAgentNum = 1;
-                }
+
                 String otherAgent = this.agentName(otherAgentNum, (OOState) s);
-                ObjectInstance agent2 = ((GenericOOState) s).touch(otherAgent);
+                ObjectInstance agentStay = ((GenericOOState) s).touch(otherAgent);
 
                 if((Integer) agent.get(SoccerGame.BALL) == 1){
                     ((MutableState) agent).set(SoccerGame.BALL, 0);
-                    ((MutableState) agent2).set(SoccerGame.BALL, 1);
+                    ((MutableState) agentStay).set(SoccerGame.BALL, 1);
+
+                    System.out.print("Type1 p1: ");
+                    System.out.print(p1.x);
+                    System.out.println(p1.y);
+                    System.out.print("Type1 anl: ");
+                    System.out.print(anl.x);
+                    System.out.println(anl.y);
+
+                    System.out.print("Type 1 COLLISION: Agent ");
+                    System.out.print(agentNum);
+                    System.out.println(" Loses Ball");
                 }
                 break;
             }

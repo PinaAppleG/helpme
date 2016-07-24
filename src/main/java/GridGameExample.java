@@ -22,7 +22,9 @@ import burlap.debugtools.DPrint;
 import burlap.domain.stochasticgames.gridgame.GGVisualizer;
 import burlap.domain.stochasticgames.gridgame.GridGame;
 import burlap.mdp.core.TerminalFunction;
+import burlap.mdp.core.action.SimpleAction;
 import burlap.mdp.core.state.State;
+import burlap.mdp.stochasticgames.JointAction;
 import burlap.mdp.stochasticgames.agent.SGAgentType;
 import burlap.mdp.stochasticgames.model.JointRewardFunction;
 import burlap.mdp.stochasticgames.oo.OOSGDomain;
@@ -49,7 +51,7 @@ public class GridGameExample {
         final OOSGDomain domain = gridGame.generateDomain();
         final HashableStateFactory hashingFactory = new SimpleHashableStateFactory();
         final State s = SoccerGame.getSoccerInitialState();
-        JointRewardFunction rf = new SoccerGame.GGJointRewardFunction(domain, -1, 100, false); //set reward parameters
+        JointRewardFunction rf = new SoccerGame.GGJointRewardFunction(domain, 0, 100, false); //set reward parameters
         TerminalFunction tf = new SoccerGame.GGTerminalFunction(domain);
 
         // MultiAgentQLearning parameters
@@ -78,6 +80,13 @@ public class GridGameExample {
         a0.setLearningPolicy(new PolicyFromJointPolicy(0,ja0));
         a1.setLearningPolicy(new PolicyFromJointPolicy(1,ja1));
 
+        //specify state
+        //extract Q value for that state for Player A. Save Current.
+        //now loop
+        //extract Q value for that state for Player A. Save Updated.
+        //Updated - Current
+        //Every w.runGame() uses the previous episode's q-values (it reuses the same instances for every iteration).
+
 
         w.join(a0);
         w.join(a1);
@@ -85,17 +94,41 @@ public class GridGameExample {
         GameEpisode ga = null;
         List<GameEpisode> games = new ArrayList<GameEpisode>();
 
+        //turn off all the random printing
+        DPrint.toggleCode(w.getDebugId(), false);
+
+        ArrayList <Double> Q_delta = new ArrayList<Double>();
+        List experimentActions = new ArrayList();
+
+        //switched order since the frist action is for Player B, second action is for Player A
+        experimentActions.add(new SimpleAction("south"));
+        experimentActions.add(new SimpleAction("noop"));
+
+
+        JointAction ja = new JointAction(experimentActions);
+
+        double currentQ = a1.getMyQSource().getQValueFor(s, ja).q;
         for(int i = 0; i < 10; i++){
+            System.out.print("-----GAME ");
+            System.out.println(i);
             ga = w.runGame();
             games.add(ga);
+            double newQ = a1.getMyQSource().getQValueFor(s, ja).q;
+            Q_delta.add(Math.abs(newQ - currentQ));
+            //System.out.println(currentQ);
+            currentQ = newQ;
+            //System.out.println(newQ);
         }
 
+
+//        for(Double q : Q_delta) {
+//            System.out.println(q);
+//        }
         Visualizer v = GGVisualizer.getVisualizer(9, 9);
         new GameSequenceVisualizer(v, domain, games);
 
-
-
     }
+
     public static void VICorrelatedTest(){
 
         //SoccerGame soccer = new SoccerGame();
@@ -187,7 +220,6 @@ public class GridGameExample {
 
     }
 
-
     public static void saInterface(){
 
         GridGame gridGame = new GridGame();
@@ -237,10 +269,5 @@ public class GridGameExample {
 
     public static void main(String[] args) {
         FoeQ();
-
-        //VICoCoTest();
-        //VICorrelatedTest();
-        //QLCoCoTest();
-        //saInterface();
     }
 }

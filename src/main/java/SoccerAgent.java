@@ -35,7 +35,7 @@ public class SoccerAgent extends GGAgent{
             return player;
         }
         else if(variableKey.equals(SoccerGame.BALL)) {
-            //we hit this
+
             return hasBall;
         }
         else{
@@ -57,8 +57,6 @@ public class SoccerAgent extends GGAgent{
             this.player = i;
         }
         else if(variableKey.equals(SoccerGame.BALL)){
-            System.out.print("BALL: ");
-            System.out.println(i);
             this.hasBall = i;
         }
         else{

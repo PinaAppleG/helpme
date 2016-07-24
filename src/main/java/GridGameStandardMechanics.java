@@ -261,7 +261,6 @@ public class GridGameStandardMechanics implements FullJointModel {
                     ObjectInstance agent2 = ((GenericOOState) s).touch(otherAgent);
 
                     if((Integer) agent.get(SoccerGame.BALL) == 1){
-                        System.out.println("BALL HAS CHANGED POSSESSION!!!!!");
                         ((MutableState) agent).set(SoccerGame.BALL, 0);
                         ((MutableState) agent2).set(SoccerGame.BALL, 1);
                     }
@@ -530,7 +529,6 @@ public class GridGameStandardMechanics implements FullJointModel {
                 ObjectInstance agent2 = ((GenericOOState) s).touch(otherAgent);
 
                 if((Integer) agent.get(SoccerGame.BALL) == 1){
-                    System.out.println("BALL HAS CHANGED POSSESSION!!!!!");
                     ((MutableState) agent).set(SoccerGame.BALL, 0);
                     ((MutableState) agent2).set(SoccerGame.BALL, 1);
                 }

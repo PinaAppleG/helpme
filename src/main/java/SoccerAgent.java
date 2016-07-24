@@ -48,18 +48,12 @@ public class SoccerAgent extends GGAgent{
 
         int i = StateUtilities.stringOrNumber(value).intValue();
         if(variableKey.equals(VAR_X)){
-//            System.out.print("VAR_X: ");
-//            System.out.println(i);
             this.x = i;
         }
         else if(variableKey.equals(VAR_Y)){
-//            System.out.print("VAR_Y: ");
-//            System.out.println(i);
             this.y = i;
         }
         else if(variableKey.equals(VAR_PN)){
-//            System.out.print("VAR_PN: ");
-//            System.out.println(i);
             this.player = i;
         }
         else if(variableKey.equals(SoccerGame.BALL)){

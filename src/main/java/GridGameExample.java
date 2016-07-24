@@ -1,16 +1,23 @@
+import burlap.behavior.learningrate.ExponentialDecayLR;
+import burlap.behavior.learningrate.LearningRate;
 import burlap.behavior.singleagent.learning.tdmethods.QLearning;
 import burlap.behavior.stochasticgames.GameEpisode;
 import burlap.behavior.stochasticgames.PolicyFromJointPolicy;
 import burlap.behavior.stochasticgames.agents.interfacing.singleagent.LearningAgentToSGAgentInterface;
 import burlap.behavior.stochasticgames.agents.madp.MultiAgentDPPlanningAgent;
+import burlap.behavior.stochasticgames.agents.maql.MAQLFactory;
 import burlap.behavior.stochasticgames.agents.maql.MultiAgentQLearning;
 import burlap.behavior.stochasticgames.auxiliary.GameSequenceVisualizer;
 import burlap.behavior.stochasticgames.madynamicprogramming.backupOperators.CoCoQ;
 import burlap.behavior.stochasticgames.madynamicprogramming.backupOperators.CorrelatedQ;
+import burlap.behavior.stochasticgames.madynamicprogramming.backupOperators.MinMaxQ;
 import burlap.behavior.stochasticgames.madynamicprogramming.dpplanners.MAValueIteration;
 import burlap.behavior.stochasticgames.madynamicprogramming.policies.ECorrelatedQJointPolicy;
 import burlap.behavior.stochasticgames.madynamicprogramming.policies.EGreedyMaxWellfare;
+import burlap.behavior.stochasticgames.madynamicprogramming.policies.EMinMaxPolicy;
 import burlap.behavior.stochasticgames.solvers.CorrelatedEquilibriumSolver;
+import burlap.behavior.valuefunction.ConstantValueFunction;
+import burlap.behavior.valuefunction.QFunction;
 import burlap.debugtools.DPrint;
 import burlap.domain.stochasticgames.gridgame.GGVisualizer;
 import burlap.domain.stochasticgames.gridgame.GridGame;
@@ -36,55 +43,59 @@ import java.util.List;
  */
 public class GridGameExample {
 
-    public static void VICoCoTest(){
-
-        //grid game domain
-        GridGame gridGame = new GridGame();
+    public static void FoeQ(){
+        //Setting up GridGame World parameters
+        SoccerGame gridGame = new SoccerGame();
         final OOSGDomain domain = gridGame.generateDomain();
-
         final HashableStateFactory hashingFactory = new SimpleHashableStateFactory();
+        final State s = SoccerGame.getSoccerInitialState();
+        JointRewardFunction rf = new SoccerGame.GGJointRewardFunction(domain, -1, 100, false); //set reward parameters
+        TerminalFunction tf = new SoccerGame.GGTerminalFunction(domain);
 
-        //run the grid game version of prisoner's dilemma
-        final State s = GridGame.getPrisonersDilemmaInitialState();
-
-        //define joint reward function and termination conditions for this game
-        JointRewardFunction rf = new GridGame.GGJointRewardFunction(domain, -1, 100, false);
-        TerminalFunction tf = new GridGame.GGTerminalFunction(domain);
-
-        //both agents are standard: access to all actions
+        // MultiAgentQLearning parameters
+        double gamma = 0.9;
+        double epsilon = 0.001; //expoloration?
+        double initialLearningRate = 1.0;
+        double decayRate = 0.99;
+        double minimumLearningRate = 0.001;
+        QFunction initQ = new ConstantValueFunction(1.0);
+        LearningRate learningRate = new ExponentialDecayLR(initialLearningRate, decayRate, minimumLearningRate);
         SGAgentType at = GridGame.getStandardGridGameAgentType(domain);
+        //Decay rate --> updates learning rate after every stage, NOT game. What is a stage?
 
-        //create our multi-agent planner
-        MAValueIteration vi = new MAValueIteration(domain, rf, tf, 0.99, hashingFactory, 0., new CoCoQ(), 0.00015, 50);
+        MultiAgentQLearning a0 = new MultiAgentQLearning(domain, gamma, learningRate, hashingFactory, initQ, new MinMaxQ(), true, "agent0", at);
+        MultiAgentQLearning a1 = new MultiAgentQLearning(domain, gamma, learningRate, hashingFactory, initQ, new MinMaxQ(), true, "agent1", at);
+        //Then for Friend-Q, I swap out "new MinMaxQ()" for "new MaxQ()".
 
-        //instantiate a world in which our agents will play
         World w = new World(domain, rf, tf, s);
 
+        EMinMaxPolicy ja0 = new EMinMaxPolicy(a0, epsilon, 0);
+        EMinMaxPolicy ja1 = new EMinMaxPolicy(a1, epsilon, 1);
 
-        //create a greedy joint policy from our planner's Q-values
-        EGreedyMaxWellfare jp0 = new EGreedyMaxWellfare(0.);
-        jp0.setBreakTiesRandomly(false); //don't break ties randomly
+        ja0.setAgentsInJointPolicyFromWorld(w);
+        ja1.setAgentsInJointPolicyFromWorld(w);
 
-        //create agents that follows their end of the computed the joint policy
-        MultiAgentDPPlanningAgent a0 = new MultiAgentDPPlanningAgent(domain, vi, new PolicyFromJointPolicy(0, jp0), "agent0", at);
-        MultiAgentDPPlanningAgent a1 = new MultiAgentDPPlanningAgent(domain, vi, new PolicyFromJointPolicy(1, jp0), "agent1", at);
+        a0.setLearningPolicy(new PolicyFromJointPolicy(0,ja0));
+        a1.setLearningPolicy(new PolicyFromJointPolicy(1,ja1));
+
 
         w.join(a0);
         w.join(a1);
-
-        //run some games of the agents playing that policy
+        //System.out.println(s.variableKeys());
         GameEpisode ga = null;
-        for(int i = 0; i < 3; i++){
+        List<GameEpisode> games = new ArrayList<GameEpisode>();
+
+        for(int i = 0; i < 10; i++){
             ga = w.runGame();
+            games.add(ga);
         }
 
-        //visualize results
         Visualizer v = GGVisualizer.getVisualizer(9, 9);
-        new GameSequenceVisualizer(v, domain, Arrays.asList(ga));
+        new GameSequenceVisualizer(v, domain, games);
+
 
 
     }
-
     public static void VICorrelatedTest(){
 
         //SoccerGame soccer = new SoccerGame();
@@ -126,7 +137,6 @@ public class GridGameExample {
 
         Visualizer v = GGVisualizer.getVisualizer(9, 9);
         new GameSequenceVisualizer(v, domain, games);
-
 
     }
 
@@ -223,20 +233,14 @@ public class GridGameExample {
 
         Visualizer v = GGVisualizer.getVisualizer(9, 9);
         new GameSequenceVisualizer(v, domain, gas);
-
-
     }
-
 
     public static void main(String[] args) {
-
-        //choose one
+        FoeQ();
 
         //VICoCoTest();
-        VICorrelatedTest();
+        //VICorrelatedTest();
         //QLCoCoTest();
         //saInterface();
-
     }
-
 }

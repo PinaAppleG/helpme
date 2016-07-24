@@ -35,6 +35,7 @@ public class SoccerAgent extends GGAgent{
             return player;
         }
         else if(variableKey.equals(SoccerGame.BALL)) {
+            //we hit this
             return hasBall;
         }
         else{
@@ -46,17 +47,24 @@ public class SoccerAgent extends GGAgent{
     public MutableState set(Object variableKey, Object value) {
 
         int i = StateUtilities.stringOrNumber(value).intValue();
-
         if(variableKey.equals(VAR_X)){
+//            System.out.print("VAR_X: ");
+//            System.out.println(i);
             this.x = i;
         }
         else if(variableKey.equals(VAR_Y)){
+//            System.out.print("VAR_Y: ");
+//            System.out.println(i);
             this.y = i;
         }
         else if(variableKey.equals(VAR_PN)){
+//            System.out.print("VAR_PN: ");
+//            System.out.println(i);
             this.player = i;
         }
         else if(variableKey.equals(SoccerGame.BALL)){
+            System.out.print("BALL: ");
+            System.out.println(i);
             this.hasBall = i;
         }
         else{
@@ -74,5 +82,10 @@ public class SoccerAgent extends GGAgent{
     @Override
     public State copy() {
         return new SoccerAgent(x, y, player, name, hasBall);
+    }
+
+    @Override
+    public List<Object> variableKeys() {
+        return keys;
     }
 }

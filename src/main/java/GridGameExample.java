@@ -120,9 +120,7 @@ public class GridGameExample {
         List<GameEpisode> games = new ArrayList<GameEpisode>();
 
         for(int i = 0; i < 10; i++){
-            System.out.println("Check1");
             ga = w.runGame();
-            System.out.println("Check2");
             games.add(ga);
         }
 

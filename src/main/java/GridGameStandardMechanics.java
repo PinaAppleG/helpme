@@ -139,13 +139,31 @@ public class GridGameStandardMechanics implements FullJointModel {
             }
             pn++;
         }
+        Location2 loc0 = this.getLocation((OOState)s, this.agentName(0, (OOState)s));
+        Location2 loc1 = this.getLocation((OOState)s, this.agentName(1, (OOState)s));
+
+
+        Action gsa0 = ja.action(0);
+        Action gsa1 = ja.action(1);
+
+        //Agent 1 is moving, Agent 0 is not
+        if (ja.action(0).actionName().equals("noop") && !ja.action(1).actionName().equals("noop")) {
+            type1Collision((OOState)s, loc1, gsa1, loc0, 1);
+            }
+
+
+        //Agent 0 is moving, Agent 1 is not
+        if (ja.action(1).actionName().equals("noop") && !ja.action(0).actionName().equals("noop")) {
+            type1Collision((OOState)s, loc0, gsa0, loc1, 0);
+        }
+
 
         //Compare a loc form previousLocations with all locs in noopLocations
         List <Location2> basicMoveResults = new ArrayList<GridGameStandardMechanics.Location2>();
         for(int i = 0; i < ja.size(); i++){
             Location2 loc = previousLocations.get(i);
             Action gsa = ja.action(i); //i is agent number
-            basicMoveResults.add(this.sampleBasicMovement((OOState)s, loc, this.attemptedDelta(gsa.actionName()), noopLocations,i));
+            basicMoveResults.add(this.sampleBasicMovement((OOState)s, loc, this.attemptedDelta(gsa.actionName()), noopLocations));
             //if this agent collides with a stationary agent, then loc (previous action, unchanged action) is added to
             //basicMoveResults. Otherwise delta(loc) - loc based on ja.action(i) is added to basicMoveResults
 
@@ -166,7 +184,7 @@ public class GridGameStandardMechanics implements FullJointModel {
 
             ObjectInstance agent = ((GenericOOState)s).touch(agentName);
             ((MutableState)agent).set(GridGame.VAR_X, loc.x);
-            ((MutableState)agent).set(GridGame.VAR_Y, loc.y); //copy this line for setting hasBall?
+            ((MutableState)agent).set(GridGame.VAR_Y, loc.y);
 
         }
 
@@ -261,15 +279,13 @@ public class GridGameStandardMechanics implements FullJointModel {
                     if((Integer) agent.get(SoccerGame.BALL) == 1){
                         ((MutableState) agent).set(SoccerGame.BALL, 0);
                         ((MutableState) agent2).set(SoccerGame.BALL, 1);
-                        System.out.print("Type2 p1: ");
-                        System.out.print(a1op.x);
-                        System.out.println(a1op.y);
-                        System.out.print("Type2 anl: ");
-                        System.out.print(a2op.x);
-                        System.out.println(a2op.y);
-                        System.out.print("Type 2 COLLISION: Agent ");
-                        System.out.print(agentNum);
-                        System.out.println(" Loses Ball");
+
+//                        System.out.println("Type2: Agent " + agentNum + " Loses Ball");
+//                        System.out.println("Type2 a1->a2: " + a1op.x + ", " + a1op.y + " : " + a2dp.x + ", " + a2dp.y);
+//                        System.out.println("Type2 a2->a1: " + a2op.x + ", " + a2op.y + " : " + a1dp.x + ", " + a1dp.y);
+
+
+
                     }
 
                     break;
@@ -514,51 +530,16 @@ public class GridGameStandardMechanics implements FullJointModel {
      * @param agentNoOpLocs the locations occupied by agents who are not moving.
      * @return The resulting location of this agents movement.
      */
-    protected Location2 sampleBasicMovement(OOState s, Location2 p0, Location2 delta, List <Location2> agentNoOpLocs, int agentNum){
-
-        int otherAgentNum = 0;
-        if(agentNum == 0) {
-            otherAgentNum = 1;
-        }
-
-        Location2 p1 = p0.add(delta); //p1 is the location they want to go based on current p0 + delta + move/action
+    protected Location2 sampleBasicMovement(OOState s, Location2 p0, Location2 delta, List <Location2> agentNoOpLocs){
+        Location2 p1 = p0.add(delta);
         boolean reset = false;
-
-
         for(Location2 anl : agentNoOpLocs){
-            if(agentNoOpLocs.size() == 2) {
-                break;
-            }
-            if(p1.equals(anl)){ //if the desired position is the same as any of the locations where agent NOOP exists
+            if(p1.equals(anl)){
                 reset = true;
-
-
-                //Changing ball possession
-                String agentName = this.agentName(agentNum, (OOState)s);
-                ObjectInstance agent = ((GenericOOState)s).touch(agentName);
-
-                String otherAgent = this.agentName(otherAgentNum, (OOState) s);
-                ObjectInstance agentStay = ((GenericOOState) s).touch(otherAgent);
-
-                if((Integer) agent.get(SoccerGame.BALL) == 1){
-                    ((MutableState) agent).set(SoccerGame.BALL, 0);
-                    ((MutableState) agentStay).set(SoccerGame.BALL, 1);
-
-                    System.out.print("Type1 p1: ");
-                    System.out.print(p1.x);
-                    System.out.println(p1.y);
-                    System.out.print("Type1 anl: ");
-                    System.out.print(anl.x);
-                    System.out.println(anl.y);
-
-                    System.out.print("Type 1 COLLISION: Agent ");
-                    System.out.print(agentNum);
-                    System.out.println(" Loses Ball");
-                }
                 break;
             }
         }
-        //colliding with a wall will set reset = true
+
         if(delta.x != 0 && !reset){
             reset = this.sampleWallCollision(p0, delta, s.objectsOfClass(GridGame.CLASS_DIM_V_WALL), true);
         }
@@ -567,7 +548,6 @@ public class GridGameStandardMechanics implements FullJointModel {
             reset = this.sampleWallCollision(p0, delta, s.objectsOfClass(GridGame.CLASS_DIM_H_WALL), false);
         }
 
-        //if a collission happens, reduce p1 back to p0 (i.e. back to original position)
         if(reset){
             p1 = p1.subtract(delta);
         }
@@ -575,6 +555,42 @@ public class GridGameStandardMechanics implements FullJointModel {
         return p1;
     }
 
+    public void type1Collision(OOState s, Location2 p0, Action destination, Location2 stayer, int agentNum){
+
+
+        int otherAgentNum = 0;
+        if(agentNum == 0) {
+            otherAgentNum = 1;
+        }
+        Location2 change = this.attemptedDelta(destination.actionName());
+        Location2 moved = p0.add(change);
+
+
+
+
+        if(moved.equals(stayer)){ //if the desired position is the same as any of the locations where agent NOOP exists
+
+            //Changing ball possession
+            String agentName = this.agentName(agentNum, (OOState)s);
+            ObjectInstance agent = ((GenericOOState)s).touch(agentName);
+
+            String otherAgent = this.agentName(otherAgentNum, (OOState) s);
+            ObjectInstance agentStay = ((GenericOOState) s).touch(otherAgent);
+            if((Integer) agent.get(SoccerGame.BALL) == 1){
+                ((MutableState) agent).set(SoccerGame.BALL, 0);
+                ((MutableState) agentStay).set(SoccerGame.BALL, 1);
+
+//                System.out.println("Type 1: Agent " + agentNum + " Loses Ball");
+//                System.out.print("p0 + delta: " + p0.x + "," + p0.y + " + " + change.x + "," + change.y + " = ");
+//                System.out.print(moved.x + "," + moved.y + " -> moved");
+//                System.out.println(" -> stayer: " + stayer.x + ", " + stayer.y);
+
+
+
+//                System.out.println("destination name : " + destination.actionName());
+            }
+        }
+    }
 
 
     /**

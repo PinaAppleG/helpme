@@ -4,8 +4,6 @@
     <list default="true" id="b6fb6aab-cb12-485a-a260-fb445c564886" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/GridGameExample.java" afterPath="$PROJECT_DIR$/src/main/java/GridGameExample.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java" afterPath="$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SoccerAgent.java" afterPath="$PROJECT_DIR$/src/main/java/SoccerAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SoccerGame.java" afterPath="$PROJECT_DIR$/src/main/java/SoccerGame.java" />
     </list>
     <ignored path="project2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,26 +25,26 @@
     <favorites_list name="project2" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44080338">
+    <splitter split-orientation="horizontal" split-proportion="0.4947146">
       <split-first>
         <leaf>
-          <file leaf-file-name="GridGameExample.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="GridGameExample.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/GridGameExample.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1020">
-                  <caret line="107" column="54" selection-start-line="107" selection-start-column="54" selection-end-line="107" selection-end-column="54" />
+                <state relative-caret-position="130">
+                  <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
                   <folding>
                     <element signature="imports" expanded="true" />
-                    <element signature="e#4943#4956#0" expanded="true" />
-                    <element signature="e#5105#5113#0" expanded="true" />
+                    <element signature="e#4941#4954#0" expanded="true" />
+                    <element signature="e#5103#5111#0" expanded="true" />
                     <element signature="method#VICorrelatedTest#0;class#GridGameExample#0" expanded="false" />
-                    <element signature="e#7678#7691#0" expanded="true" />
+                    <element signature="e#7705#7718#0" expanded="true" />
                     <element signature="method#QLCoCoTest#0;class#GridGameExample#0" expanded="false" />
-                    <element signature="e#9226#9239#0" expanded="true" />
+                    <element signature="e#9253#9266#0" expanded="true" />
                     <element signature="method#saInterface#0;class#GridGameExample#0" expanded="false" />
-                    <element signature="e#11210#11223#0" expanded="true" />
-                    <element signature="e#11681#11682#0" expanded="true" />
-                    <element signature="e#11703#11704#0" expanded="true" />
+                    <element signature="e#11237#11250#0" expanded="true" />
+                    <element signature="e#11708#11709#0" expanded="true" />
+                    <element signature="e#11730#11731#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -84,23 +82,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="GridGameStandardMechanics.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="GridGameStandardMechanics.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="600">
-                  <caret line="154" column="76" selection-start-line="154" selection-start-column="76" selection-end-line="154" selection-end-column="76" />
+                <state relative-caret-position="312">
+                  <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#2792#2813#0" expanded="true" />
                     <element signature="e#3485#3506#0" expanded="true" />
-                    <element signature="e#19810#19828#0" expanded="true" />
-                    <element signature="e#21101#21110#0" expanded="true" />
-                    <element signature="e#33388#33397#0" expanded="true" />
-                    <element signature="e#33460#33475#0" expanded="true" />
-                    <element signature="e#34296#34314#0" expanded="true" />
-                    <element signature="e#34951#34960#0" expanded="true" />
-                    <element signature="e#35970#35991#0" expanded="true" />
-                    <element signature="e#36050#36059#0" expanded="true" />
+                    <element signature="e#20296#20314#0" expanded="true" />
+                    <element signature="e#21587#21596#0" expanded="true" />
+                    <element signature="e#33788#33797#0" expanded="true" />
+                    <element signature="e#33860#33875#0" expanded="true" />
+                    <element signature="e#34696#34714#0" expanded="true" />
+                    <element signature="e#35351#35360#0" expanded="true" />
+                    <element signature="e#36370#36391#0" expanded="true" />
+                    <element signature="e#36450#36459#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -109,60 +107,30 @@
         </leaf>
       </split-first>
       <split-second>
-        <splitter split-orientation="vertical" split-proportion="0.4117647">
-          <split-first>
-            <leaf>
-              <file leaf-file-name="GridGameStandardMechanics.java" pinned="false" current-in-tab="true">
-                <entry file="file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="299">
-                      <caret line="263" column="55" selection-start-line="263" selection-start-column="55" selection-end-line="263" selection-end-column="55" />
-                      <folding>
-                        <element signature="imports" expanded="true" />
-                        <element signature="e#2792#2813#0" expanded="true" />
-                        <element signature="e#3485#3506#0" expanded="true" />
-                        <element signature="e#19810#19828#0" expanded="true" />
-                        <element signature="e#21101#21110#0" expanded="true" />
-                        <element signature="e#33388#33397#0" expanded="true" />
-                        <element signature="e#33460#33475#0" expanded="true" />
-                        <element signature="e#34296#34314#0" expanded="true" />
-                        <element signature="e#34951#34960#0" expanded="true" />
-                        <element signature="e#35970#35991#0" expanded="true" />
-                        <element signature="e#36050#36059#0" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-            </leaf>
-          </split-first>
-          <split-second>
-            <leaf>
-              <file leaf-file-name="GridGameStandardMechanics.java" pinned="false" current-in-tab="true">
-                <entry file="file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="97">
-                      <caret line="523" column="38" selection-start-line="523" selection-start-column="6" selection-end-line="523" selection-end-column="38" />
-                      <folding>
-                        <element signature="imports" expanded="true" />
-                        <element signature="e#2792#2813#0" expanded="true" />
-                        <element signature="e#3485#3506#0" expanded="true" />
-                        <element signature="e#19810#19828#0" expanded="true" />
-                        <element signature="e#21101#21110#0" expanded="true" />
-                        <element signature="e#33388#33397#0" expanded="true" />
-                        <element signature="e#33460#33475#0" expanded="true" />
-                        <element signature="e#34296#34314#0" expanded="true" />
-                        <element signature="e#34951#34960#0" expanded="true" />
-                        <element signature="e#35970#35991#0" expanded="true" />
-                        <element signature="e#36050#36059#0" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-            </leaf>
-          </split-second>
-        </splitter>
+        <leaf>
+          <file leaf-file-name="GridGameStandardMechanics.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="765">
+                  <caret line="585" column="0" selection-start-line="585" selection-start-column="0" selection-end-line="586" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#2792#2813#0" expanded="true" />
+                    <element signature="e#3485#3506#0" expanded="true" />
+                    <element signature="e#20296#20314#0" expanded="true" />
+                    <element signature="e#21587#21596#0" expanded="true" />
+                    <element signature="e#33788#33797#0" expanded="true" />
+                    <element signature="e#33860#33875#0" expanded="true" />
+                    <element signature="e#34696#34714#0" expanded="true" />
+                    <element signature="e#35351#35360#0" expanded="true" />
+                    <element signature="e#36370#36391#0" expanded="true" />
+                    <element signature="e#36450#36459#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
       </split-second>
     </splitter>
   </component>
@@ -188,8 +156,8 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/SoccerAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/SoccerGame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/GridGameExample.java" />
         <option value="$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GridGameExample.java" />
       </list>
     </option>
   </component>
@@ -648,7 +616,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3903463" sideWeight="0.50208336" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26757607" sideWeight="0.49791667" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31689402" sideWeight="0.49791667" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -692,12 +660,6 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java</url>
-          <line>535</line>
-          <properties />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/GridGameExample.java</url>
           <line>69</line>
           <properties />
@@ -705,7 +667,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java</url>
-          <line>228</line>
+          <line>246</line>
           <properties class="GridGameStandardMechanics" method="resolvePositionSwaps" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
@@ -871,42 +833,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GridGameExample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="107" column="54" selection-start-line="107" selection-start-column="54" selection-end-line="107" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4943#4956#0" expanded="true" />
-            <element signature="e#5105#5113#0" expanded="true" />
-            <element signature="method#VICorrelatedTest#0;class#GridGameExample#0" expanded="false" />
-            <element signature="e#7678#7691#0" expanded="true" />
-            <element signature="method#QLCoCoTest#0;class#GridGameExample#0" expanded="false" />
-            <element signature="e#9226#9239#0" expanded="true" />
-            <element signature="method#saInterface#0;class#GridGameExample#0" expanded="false" />
-            <element signature="e#11210#11223#0" expanded="true" />
-            <element signature="e#11681#11682#0" expanded="true" />
-            <element signature="e#11703#11704#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/GridGameStandardMechanics.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="523" column="38" selection-start-line="523" selection-start-column="6" selection-end-line="523" selection-end-column="38" />
+        <state relative-caret-position="312">
+          <caret line="154" column="43" selection-start-line="154" selection-start-column="43" selection-end-line="154" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2792#2813#0" expanded="true" />
             <element signature="e#3485#3506#0" expanded="true" />
-            <element signature="e#19810#19828#0" expanded="true" />
-            <element signature="e#21101#21110#0" expanded="true" />
-            <element signature="e#33388#33397#0" expanded="true" />
-            <element signature="e#33460#33475#0" expanded="true" />
-            <element signature="e#34296#34314#0" expanded="true" />
-            <element signature="e#34951#34960#0" expanded="true" />
-            <element signature="e#35970#35991#0" expanded="true" />
-            <element signature="e#36050#36059#0" expanded="true" />
+            <element signature="e#20296#20314#0" expanded="true" />
+            <element signature="e#21587#21596#0" expanded="true" />
+            <element signature="e#33788#33797#0" expanded="true" />
+            <element signature="e#33860#33875#0" expanded="true" />
+            <element signature="e#34696#34714#0" expanded="true" />
+            <element signature="e#35351#35360#0" expanded="true" />
+            <element signature="e#36370#36391#0" expanded="true" />
+            <element signature="e#36450#36459#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GridGameExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4941#4954#0" expanded="true" />
+            <element signature="e#5103#5111#0" expanded="true" />
+            <element signature="method#VICorrelatedTest#0;class#GridGameExample#0" expanded="false" />
+            <element signature="e#7705#7718#0" expanded="true" />
+            <element signature="method#QLCoCoTest#0;class#GridGameExample#0" expanded="false" />
+            <element signature="e#9253#9266#0" expanded="true" />
+            <element signature="method#saInterface#0;class#GridGameExample#0" expanded="false" />
+            <element signature="e#11237#11250#0" expanded="true" />
+            <element signature="e#11708#11709#0" expanded="true" />
+            <element signature="e#11730#11731#0" expanded="true" />
           </folding>
         </state>
       </provider>

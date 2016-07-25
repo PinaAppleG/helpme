@@ -56,7 +56,7 @@ public class GridGameExample {
 
         // MultiAgentQLearning parameters
         double gamma = 0.9;
-        double epsilon = 0.001; //expoloration?
+        double epsilon = 0.1; //expoloration?
         double initialLearningRate = 1.0;
         double decayRate = 0.99;
         double minimumLearningRate = 0.001;
@@ -108,22 +108,23 @@ public class GridGameExample {
         JointAction ja = new JointAction(experimentActions);
 
         double currentQ = a1.getMyQSource().getQValueFor(s, ja).q;
-        for(int i = 0; i < 10; i++){
-            System.out.print("-----GAME ");
-            System.out.println(i);
+        for(int i = 0; i < 100; i++){
+//            System.out.println("-----GAME " + i);
+
             ga = w.runGame();
             games.add(ga);
             double newQ = a1.getMyQSource().getQValueFor(s, ja).q;
             Q_delta.add(Math.abs(newQ - currentQ));
-            //System.out.println(currentQ);
+            System.out.println("currentQ: " + currentQ);
+            System.out.println("newq: " + newQ);
             currentQ = newQ;
-            //System.out.println(newQ);
+            System.out.println(newQ);
         }
 
 
-//        for(Double q : Q_delta) {
-//            System.out.println(q);
-//        }
+        for(Double q : Q_delta) {
+            System.out.println(q);
+        }
         Visualizer v = GGVisualizer.getVisualizer(9, 9);
         new GameSequenceVisualizer(v, domain, games);
 
